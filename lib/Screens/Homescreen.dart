@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:selfimprovement/Screens/FavoriteScreens.dart';
 import 'package:selfimprovement/Widgets/Items.dart';
+import 'package:selfimprovement/functions/Navigationfunctions.dart';
 import 'package:selfimprovement/webfunctionalities.dart/ApiCalling.dart';
 
 class Homepage extends StatefulWidget {
@@ -27,11 +28,14 @@ class _HomepageState extends State<Homepage> {
         actions: [
           IconButton(
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: ((context) => FavoriteItems())));
+                navigatofavorite(context);
               },
               icon: Icon(Icons.favorite)),
-          IconButton(onPressed: () {}, icon: Icon(Icons.shopping_cart))
+          IconButton(
+              onPressed: () {
+                navigatetocart(context);
+              },
+              icon: Icon(Icons.shopping_cart))
         ],
       ),
       body: Container(
@@ -52,7 +56,7 @@ class _HomepageState extends State<Homepage> {
                     itemCount: snapshot.data!.products!.length,
                     itemBuilder: (context, index) {
                       return StoreItem(
-                          indexdata: index,
+                          indexdata: snapshot.data!.products![index].id ?? 1,
                           imagesdata: snapshot.data!.products![index].thumbnail
                               .toString());
                     });

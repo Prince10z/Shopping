@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:selfimprovement/Models/ApiModel.dart';
+import 'package:selfimprovement/Providers/Cart.dart';
 import 'package:selfimprovement/Providers/Favorite.dart';
 import 'package:selfimprovement/webfunctionalities.dart/ApiCalling.dart';
 
@@ -15,10 +16,23 @@ class StoreItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(children: [
-      Container(
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(0)),
-          clipBehavior: Clip.hardEdge,
-          child: Image.network(imagesdata)),
+      Consumer<Cart>(
+        builder: (context, value, child) => GestureDetector(
+          onDoubleTap: () {
+            // print("yes");
+            if (value.cartitems.contains(demoModel.products![indexdata]) ==
+                true) {
+              value.addItemtocart(indexdata);
+            } else {
+              value.removeItemfromcart(indexdata);
+            }
+          },
+          child: Container(
+              decoration: BoxDecoration(borderRadius: BorderRadius.circular(0)),
+              clipBehavior: Clip.hardEdge,
+              child: Image.network(imagesdata)),
+        ),
+      ),
       Padding(
         padding: const EdgeInsets.all(16.0),
         child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
